@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Test</title>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		$(if refresh-timeout)
+		<meta http-equiv="refresh" content="$(refresh-timeout-secs)">
+		$(endif)
+
+		<script language="JavaScript">
+		<!--
+		$(if advert-pending == 'yes')
+			var popup = '';
+			function focusAdvert() {
+			if (window.focus) popup.focus();
+			}
+			function openAdvert() {
+			popup = open('$(link-advert)', 'hotspot_advert', '');
+			setTimeout("focusAdvert()", 1000);
+			}
+		$(endif)
+			function openLogout() {
+			if (window.name != 'hotspot_status') return true;
+				open('$(link-logout)', 'hotspot_logout', 'toolbar=0,location=0,directories=0,status=0,menubars=0,resizable=1,width=280,height=250');
+			window.close();
+			return false;
+			}
+		//-->
+		</script>
+	</head>
+	<body 
+	>
+		<div class="container">
+			<div class="col-md-offset-4 col-md-4">
+				<form action="$(link-logout)" name="logout" onSubmit="return openLogout()">
+					<div class="login-box">
+						<header>
+							$(if login-by == 'trial')
+							<h2>Selamat Datang Pengguna Internet Gratis</h2>
+							<h2>Jangan lupa untuk membeli barang di toko kami supaya wifi ini tetap ada</h2>
+							$(elif login-by != 'mac')
+							<h2>Welcome $(username) ! </h2>
+							$(if $(username) == 'admin')
+							lolo
+							$(endif)
+							<p id="admin"></p>
+									</header>
+						<div class="login">
+							<table class="table table-bordered table-condensed">
+								<tr>
+									<td width="50%">IP Address</td>
+									<td> : </td>
+									<td width="45%">$(ip)</td>
+								</tr>
+								<tr>
+									<td>Bytes up/down</td>
+									<td> : </td>
+									<td>$(bytes-in-nice) / $(bytes-out-nice)</td>
+								</tr>
+							$(if session-time-left)
+								<tr>
+									<td>Connected / Left</td>
+									<td> : </td>
+									<td>$(uptime) / $(session-time-left)</td>
+								</tr>
+							$(else)
+								<tr>
+									<td>Connected</td>
+									<td> : </td>
+									<td>$(uptime)</td>
+								</tr>
+							$(endif)
+							$(if blocked == 'yes')
+								<tr>
+									<td>Status</td>
+									<td> : </td>
+									<td><div style="color: #FF8080">
+							<a href="$(link-advert)" target="hotspot_advert">advertisement</a> required</div></td>
+							$(elif refresh-timeout)
+								<tr>
+									<td>Status refresh</td>
+									<td> : </td>
+									<td>$(refresh-timeout)</td>
+								</tr>
+								
+								
+							$(endif)
+							</table>
+							$(if login-by-mac != 'yes')
+							<!-- user manager link. if user manager resides on other router, replace $(hostname) by its address
+							<button onclick="document.location='http://$(hostname)/user?subs='; return false;">status</button>
+							<!-- end of user manager link -->
+							<button type="submit" class="btn btn-default btn-block">LOGOFF</button>
+							$(endif)
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<script>
+			if ($(username) == 'admin') {
+			  document.getElementById("admin").innerHTML = "selamat datang!";
+			}
+			</script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	</body>
+</html>
